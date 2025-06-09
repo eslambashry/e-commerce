@@ -9,8 +9,14 @@ export class signUpDto {
     @IsNotEmpty()
     @MinLength(3)
     @MinLength(20)  
-    name: string;
+    firstName: string;
     
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(3)
+    @MinLength(20)  
+    lastName: string;
+
     @IsString()
     @IsNotEmpty()
     @MinLength(3)

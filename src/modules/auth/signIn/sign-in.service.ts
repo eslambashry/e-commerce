@@ -26,10 +26,7 @@ export class SignInService {
             throw new HttpException('you should sign up first', HttpStatus.NOT_FOUND);
         }
         const isMatch = await bcrypt.compare( body.password,user.password);
-        console.log("password",  body.password);
-        console.log("user.password", user.password);
-        console.log("isMatch", isMatch);
-        
+
         if(!isMatch) {
             throw new HttpException('password not match', HttpStatus.CONFLICT);
         }
