@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, max, MinLength } from "class-validator";
+import { IsNotEmpty, IsString,  MinLength } from "class-validator";
 
 
 
