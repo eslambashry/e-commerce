@@ -21,13 +21,15 @@ export class SignInService {
 
 
       async signIn(body: signUpDto){
-        const { password } = body;
-        const user = await this.userModel.findOne({ email: body.email });
+         const user = await this.userModel.findOne({ email: body.email });
         if(!user) {
             throw new HttpException('you should sign up first', HttpStatus.NOT_FOUND);
         }
-        const isMatch = await bcrypt.compare(user.password, password);
-
+        const isMatch = await bcrypt.compare( body.password,user.password);
+        console.log("password",  body.password);
+        console.log("user.password", user.password);
+        console.log("isMatch", isMatch);
+        
         if(!isMatch) {
             throw new HttpException('password not match', HttpStatus.CONFLICT);
         }

@@ -33,10 +33,11 @@ export class SignUpService {
             this.logger.warn(`Attempted registration with existing email: ${body.email}`);
             throw new HttpException('Email is already exsist', HttpStatus.CONFLICT);
         }
+        this.logger.debug(`password: ${body.password}`);
 
         const saltOrRounds = 10;
-        const password = 'random_password';
-        const hash = await bcrypt.hash(password, saltOrRounds);
+        const hash = await bcrypt.hash(body.password, saltOrRounds);
+        this.logger.debug(`hash${hash}`);
         
         const userData = {
             name: body.name,
