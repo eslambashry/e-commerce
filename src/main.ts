@@ -3,9 +3,12 @@ import { AppModule } from './app.module';
 import { winstonConfig } from './config/logger.config';
 import * as morgan from 'morgan';
 import * as winston from 'winston';
-
+import { config } from 'dotenv'
+import { resolve } from 'path'; // <-- correct import here
 
 async function bootstrap() {
+
+  config({ path: resolve('./config/.env') }); // <-- corrected line
 
   const logger = winston.createLogger(winstonConfig);
 
@@ -20,7 +23,13 @@ async function bootstrap() {
       },
     }),
   );
-  await app.listen(8080);
+    const PORT = process.env.PORT || 8080; // fallback just in case
+  console.log("PORT", PORT);
+  
+  await app.listen(PORT, () => {
+    logger.info(`server 🏃 ${PORT}`); 
+
+  })
   
 }
 bootstrap();
