@@ -14,7 +14,7 @@ async function bootstrap() {
   if (envResult.error) {
     console.error('Error loading .env file:', envResult.error);
   } else {
-    console.log('Successfully loaded .env file');
+    console.log('Successfully loaded .env file'); 
   }
   
   console.log('PORT from process.env:', process.env.PORT);
