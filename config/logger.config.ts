@@ -1,6 +1,5 @@
-// src/config/logger.config.ts
-import { utilities as nestWinstonModuleUtilities } from 'nest-winston';
 import * as winston from 'winston';
+import { utilities as nestWinstonModuleUtilities } from 'nest-winston';
 
 export const winstonConfig = {
   transports: [

@@ -10,7 +10,16 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
 
-  imports: [ProductModule,CategoryModule,AuthModule,UsersModule,MongooseModule.forRoot('mongodb://localhost:27017/nest-ecommerce'),ConfigModule.forRoot()],
+  imports: [
+     ConfigModule.forRoot({
+      envFilePath: './config/.env',
+      isGlobal: true,
+    }),
+    ProductModule,
+    CategoryModule,
+    AuthModule,
+    UsersModule,
+    MongooseModule.forRoot(process.env.DB_URL),ConfigModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })
