@@ -34,10 +34,10 @@ async function bootstrap() {
   );
 
   const PORT = process.env.PORT;
-  console.log("Final PORT:", PORT);
   
   await app.listen(PORT);
   logger.info(`Server 🏃 running on port ${PORT}`);
 }
 
 bootstrap();
+  
