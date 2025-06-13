@@ -32,7 +32,7 @@ export class SignInService {
         }
 
         
-        const payload = { userId: user._id, email: user.email };
+        const payload = { userId: user._id, email: user.email , role: user.role };
 
         console.log(process.env.JWT_SECRET);
         

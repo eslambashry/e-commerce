@@ -15,7 +15,7 @@ export class SignUpService {
         // Here you would typically handle user registration logic,
             // this.logger.log('Starting signUp process...');
         
-        if(!body.firstName || !body.lastName|| !body.email || !body.password) {
+        if(!body.firstName || !body.lastName|| !body.email || !body.password || !body.role) {
             throw new HttpException('All fields are required', HttpStatus.BAD_REQUEST);
         }
 
@@ -29,13 +29,15 @@ export class SignUpService {
 
         const hash = await bcrypt.hash(body.password, +process.env.SALT_ROUNDS);
         // this.logger.debug(`hash${hash}`);
+        console.log(body);
         
         const userData = {
             firstName: body.firstName,
             lastName: body.lastName,
             email: body.email,
-            password: hash
-        } 
+            password: hash,
+            role: body.role || 'user' 
+        }
         
         
         const user = new this.UserModel(userData);
@@ -48,5 +50,5 @@ export class SignUpService {
         user.save();
         
         // For this example, we'll just return a success message.
-        throw new HttpException('User created 👤', HttpStatus.ACCEPTED)
+        throw new HttpException(`User created 👤`  ,HttpStatus.ACCEPTED)
 }}

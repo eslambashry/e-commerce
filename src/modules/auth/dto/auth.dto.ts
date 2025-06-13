@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString,  MinLength } from "class-validator";
+import { IsEnum, IsNotEmpty, IsString,  MinLength } from "class-validator";
 
 
 
@@ -28,5 +28,11 @@ export class signUpDto {
     @MinLength(3)
     @MinLength(20)
     password: string;
+
+
+    @IsString()
+    @IsNotEmpty()
+    @IsEnum(['user', 'admin'])
+    role:string = 'user'; // Default role set to 'user'
     
 }

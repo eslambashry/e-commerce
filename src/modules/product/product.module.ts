@@ -6,7 +6,7 @@ import { Product, ProductSchema } from 'src/core/schemas/product';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [,MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }])],
+  imports: [MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }])],
   controllers: [ProductController],
   providers: [ProductService,JwtService]
 })

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import mongoose from 'mongoose';
@@ -12,6 +12,16 @@ export class ProductService {
     ) {}
 
     async createProduct(createProductDto: CreateProductDto): Promise<ProductDocument> {
+
+
+        let titleExsist = createProductDto.title;
+
+        const existingProduct = await this.productModel.findOne({ title: titleExsist });
+        if (existingProduct) {
+            throw new HttpException('Product with the same title already exists', HttpStatus.CONFLICT);            
+        }
+
+
         // Convert the owner string to ObjectId
         const productData = {
             ...createProductDto,
