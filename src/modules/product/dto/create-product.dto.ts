@@ -1,7 +1,7 @@
 import { IsString, IsNumber, IsUrl } from 'class-validator';
 
 export class CreateProductDto {
-    
+
   @IsString()
   title: string;
 
@@ -16,4 +16,7 @@ export class CreateProductDto {
 
   @IsNumber()
   max: number;
+
+  @IsString()
+  owner: string; // Assuming owner is a string representing user ID
 }

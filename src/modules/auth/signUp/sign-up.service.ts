@@ -9,11 +9,11 @@ import * as bcrypt from 'bcrypt';
 export class SignUpService {
 
       constructor(@InjectModel(User.name) private UserModel: Model<User>) {}
-      private readonly logger = new Logger(SignUpService.name);
+    //   private readonly logger = new Logger(SignUpService.name);
 
     async signUp(body: signUpDto){
         // Here you would typically handle user registration logic,
-            this.logger.log('Starting signUp process...');
+            // this.logger.log('Starting signUp process...');
         
         if(!body.firstName || !body.lastName|| !body.email || !body.password) {
             throw new HttpException('All fields are required', HttpStatus.BAD_REQUEST);
@@ -22,13 +22,13 @@ export class SignUpService {
         const emailExsists = await this.UserModel.findOne({ email: body.email });
         
         if(emailExsists) {
-            this.logger.warn(`Attempted registration with existing email: ${body.email}`);
+            // this.logger.warn(`Attempted registration with existing email: ${body.email}`);
             throw new HttpException('Email is already exsist', HttpStatus.CONFLICT);
         }
-        this.logger.debug(`password: ${body.password}`);
+        // this.logger.debug(`password: ${body.password}`);
 
         const hash = await bcrypt.hash(body.password, process.env.SALT_ROUNDS);
-        this.logger.debug(`hash${hash}`);
+        // this.logger.debug(`hash${hash}`);
         
         const userData = {
             firstName: body.firstName,
@@ -41,7 +41,7 @@ export class SignUpService {
         const user = new this.UserModel(userData);
 
         if(!user) {
-            this.logger.error('Failed to create user');
+            // this.logger.error('Failed to create user');
             throw new HttpException('Failed to create user', HttpStatus.INTERNAL_SERVER_ERROR);
         }
         // such as saving the user to a database.
