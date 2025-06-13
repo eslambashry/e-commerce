@@ -24,7 +24,7 @@ async function bootstrap() {
   });
 
   app.use(
-    morgan('combined', {
+    morgan('dev', {
       stream: {
         write: (message) => console.log(message)
          //logger.info(message.trim()),

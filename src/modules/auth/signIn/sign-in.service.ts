@@ -34,8 +34,10 @@ export class SignInService {
         
         const payload = { userId: user._id, email: user.email };
 
+        console.log(process.env.JWT_SECRET);
+        
             
-        const token = await this.jwtService.signAsync(payload);
+        const token =  this.jwtService.sign(payload,{ secret: process.env.JWT_SECRET });
 
         user.token = token;
 
