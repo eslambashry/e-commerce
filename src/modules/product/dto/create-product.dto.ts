@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsUrl } from 'class-validator';
+import { IsString, IsNumber, IsUrl, IsMongoId, IsNotEmpty } from 'class-validator';
 
 export class CreateProductDto {
 
@@ -18,5 +18,7 @@ export class CreateProductDto {
   max: number;
 
   @IsString()
-  owner: string; // Assuming owner is a string representing user ID
+@IsMongoId()
+@IsNotEmpty()
+owner: string;  // This will be a MongoDB ObjectId as string
 }

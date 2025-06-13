@@ -27,7 +27,7 @@ export class SignUpService {
         }
         // this.logger.debug(`password: ${body.password}`);
 
-        const hash = await bcrypt.hash(body.password, process.env.SALT_ROUNDS);
+        const hash = await bcrypt.hash(body.password, +process.env.SALT_ROUNDS);
         // this.logger.debug(`hash${hash}`);
         
         const userData = {
