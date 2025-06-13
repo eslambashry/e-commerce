@@ -3,22 +3,21 @@ import * as morgan from 'morgan';
 import * as winston from 'winston';
 import { config } from 'dotenv';
 import { resolve } from 'path';
-import { winstonConfig } from 'config/logger.config';
 import { AppModule } from './app.module';
-import serverlessExpress from '@vendia/serverless-express';
-import { Callback, Context, Handler } from 'aws-lambda';
-
-let server: Handler;
+import { winstonConfig } from 'config/logger.config';
 
 async function bootstrap() {
   // Load environment variables first
   const envResult = config({ path: resolve('./config/.env') });
   
+  // Debug the env loading
   if (envResult.error) {
     console.error('Error loading .env file:', envResult.error);
   } else {
     console.log('Successfully loaded .env file'); 
   }
+  
+  console.log('PORT from process.env:', process.env.PORT);
   
   const logger = winston.createLogger(winstonConfig);
 
@@ -34,28 +33,11 @@ async function bootstrap() {
     }),
   );
 
-  await app.init();
+  const PORT = process.env.PORT;
   
-  const expressApp = app.getHttpAdapter().getInstance();
-  return serverlessExpress({ app: expressApp });
+  await app.listen(PORT);
+  logger.verbose(`Server 🏃 running on port ${PORT}`);
 }
 
-export const handler: Handler = async (
-  event: any,
-  context: Context,
-  callback: Callback,
-) => {
-  server = server ?? (await bootstrap());
-  return server(event, context, callback);
-};
-
-// Only run the local server if not in Lambda environment
-if (process.env.VERCEL !== '1') {
-  const PORT = process.env.PORT || 3000;
-  bootstrap().then(async (app) => {
-    const expressApp = (await app).app;
-    expressApp.listen(PORT, () => {
-      console.log(`Server 🏃 running on port ${PORT}`);
-    });
-  });
-}
+bootstrap();
+  

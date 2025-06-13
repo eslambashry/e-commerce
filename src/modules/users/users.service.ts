@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/core/schemas/user.schema';
-import { updateUserDto } from './dto/update-user';
+ import { signUpDto } from '../auth/dto/auth.dto';
 
 @Injectable()
 export class UsersService {
@@ -26,7 +26,7 @@ export class UsersService {
         throw new HttpException(user, HttpStatus.ACCEPTED)
     }
 
-    async updateUser(id: string, userData: Partial<updateUserDto>): Promise<User> {
+    async updateUser(id: string, userData: Partial<signUpDto>): Promise<User> {
     const user = await this.UserModel.findByIdAndUpdate(id, userData, { new: true });
     if (!user) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);

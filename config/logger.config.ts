@@ -11,14 +11,16 @@ export const winstonConfig = {
         }),
       ),
     }),
-    new winston.transports.File({
-      filename: 'logs/app.log',
-      level: 'info',
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json(),
-      ),
-    }),
+    // Remove or conditionally add file transport only in non-serverless environment
+    ...(process.env.VERCEL ? [] : [
+      new winston.transports.File({
+        filename: 'logs/app.log',
+        level: 'info',
+        format: winston.format.combine(
+          winston.format.timestamp(),
+          winston.format.json(),
+        ),
+      })
+    ])
   ],
-}; 
-// is  💼 
+};

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { updateUserDto } from './dto/update-user';
+import { signUpDto } from '../auth/dto/auth.dto';
 
 @Controller('users')
 export class UsersController {
@@ -20,7 +20,7 @@ export class UsersController {
         }
 
         @Put('/:id')
-        async updateInUser(@Param('id') id: string, @Body() userData: Partial<updateUserDto>) {
+        async updateInUser(@Param('id') id: string, @Body() userData: Partial<signUpDto>) {
         return await this.userService.updateUser(id, userData);
         }
 
