@@ -17,8 +17,8 @@ export class CreateProductDto {
   @IsNumber()
   max: number;
 
-  @IsString()
-@IsMongoId()
-@IsNotEmpty()
-owner: string;  // This will be a MongoDB ObjectId as string
+    @IsString()
+    @IsMongoId()
+    @IsNotEmpty()
+    owner: string;  // This will be a MongoDB ObjectId as string
 }
