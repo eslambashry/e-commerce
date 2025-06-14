@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { Category } from 'src/core/schemas/category';
+import { Category } from '../../core/schemas/category';
 
 @Injectable()
 export class CategoryService {
