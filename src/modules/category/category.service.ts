@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { CreateCategoryDto } from './dto/create-category.dto';
 import { Category } from 'src/core/schemas/category';
 
 @Injectable()
@@ -18,7 +19,7 @@ export class CategoryService {
         return categories;
     }
     
-    async getCategoryById(id: string): Promise<Category> {
+    async getCategoryById(id: string){
         const category = await this.categoryModel.findById(id);
         if (!category) {
             throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
@@ -26,7 +27,7 @@ export class CategoryService {
         return category;
         }
 
-    async createCategory(categoryData: Partial<Category>): Promise<Category> {
+    async createCategory(categoryData: CreateCategoryDto){
         const existingCategory = await this.categoryModel.findOne({ title: categoryData.title });
         if (existingCategory) {
             throw new HttpException('Category already exists', HttpStatus.CONFLICT);
@@ -39,7 +40,7 @@ export class CategoryService {
         return savedCategory;
     }
 
-    async updateCategory(id: string, categoryData: Partial<Category>): Promise<Category> {
+    async updateCategory(id: string, categoryData: CreateCategoryDto){
         const updatedCategory = await this.categoryModel.findByIdAndUpdate(id, categoryData, { new: true });
         if (!updatedCategory) {
             throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
