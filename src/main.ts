@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
-import morgan from 'morgan';
-import * as winston from 'winston';
+import  morgan from 'morgan';
 import { config } from 'dotenv';
 import { resolve } from 'path';
 import { AppModule } from './app.module';
-// import { winstonConfig } from 'config/logger.config';
+import { winstonConfig } from 'config/logger.config';
+import winston from 'winston';
 
 async function bootstrap() {
   // Load environment variables first
@@ -17,7 +17,7 @@ async function bootstrap() {
     console.log('Successfully loaded .env file'); 
   }
     
-  // const logger = winston.createLogger(winstonConfig);
+  const logger = winston.createLogger(winstonConfig);
 
   const app = await NestFactory.create(AppModule, {
     logger: ['log', 'error', 'warn', 'debug', 'verbose'],
@@ -26,14 +26,16 @@ async function bootstrap() {
   app.use(
     morgan('dev', {
       stream: {
-        write: (message) => console.log(message)
-         //logger.info(message.trim()),
+        write: (message) => logger.info(message.trim()),
       },
     }),
   );
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT;
+  
   await app.listen(PORT);
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  logger.info(`Server 🏃 running on port ${PORT}`);
 }
+
 bootstrap();
+  
