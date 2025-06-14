@@ -3,7 +3,8 @@ import  morgan from 'morgan';
 import { config } from 'dotenv';
 import { resolve } from 'path';
 import { AppModule } from './app.module';
-import { winstonConfig } from 'config/logger.config';
+import { winstonConfig } from '../config/logger.config';
+
 import winston from 'winston';
 
 async function bootstrap() {
