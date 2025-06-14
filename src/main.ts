@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import * as morgan from 'morgan';
+import morgan from 'morgan';
 import * as winston from 'winston';
 import { config } from 'dotenv';
 import { resolve } from 'path';
@@ -32,11 +32,8 @@ async function bootstrap() {
     }),
   );
 
-  const PORT = process.env.PORT;
-  
+  const PORT = process.env.PORT || 3000;
   await app.listen(PORT);
-  // logger.info(`Server 🏃 running on port ${PORT}`);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
-
 bootstrap();
-  
