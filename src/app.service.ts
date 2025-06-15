@@ -7,7 +7,7 @@ export class AppService {
       title: "🛍️ E-Commerce API Documentation",
       version: "1.0.0",
       description: "Welcome to our comprehensive e-commerce API",
-      baseUrl: process.env.BASE_URL || "http://localhost:3000",
+      baseUrl: process.env.BASE_URL || "http://localhost:8080",
       routes: {
         authentication: {
           title: "🔐 Authentication",
@@ -15,7 +15,7 @@ export class AppService {
           endpoints: [
             {
               method: "POST",
-              path: "/auth/signup",
+              path: "/auth/sign_up",
               description: "Register a new user account",
               body: {
                 email: "user@example.com",
@@ -24,8 +24,8 @@ export class AppService {
               }
             },
             {
-              method: "POST", 
-              path: "/auth/signin",
+              method: "POST",
+              path: "/auth/sign_in",
               description: "Login with existing credentials",
               body: {
                 email: "user@example.com",
@@ -58,17 +58,17 @@ export class AppService {
           ]
         },
         categories: {
-          title: "📂 Categories",
+          title: "📂 Category",
           description: "Product categories management",
           endpoints: [
             {
               method: "GET",
-              path: "/categories",
+              path: "/category",
               description: "Get all product categories"
             },
             {
               method: "POST",
-              path: "/categories",
+              path: "/category",
               description: "Create a new category",
               auth: "Admin Token Required",
               body: {
@@ -78,17 +78,71 @@ export class AppService {
             },
             {
               method: "PUT",
-              path: "/categories/:id",
+              path: "/category/:id",
               description: "Update category",
               auth: "Admin Token Required",
               params: { id: "Category ID" }
             },
             {
               method: "DELETE",
-              path: "/categories/:id",
+              path: "/category/:id",
               description: "Delete category",
               auth: "Admin Token Required",
               params: { id: "Category ID" }
+            }
+          ]
+        },
+        products: {
+          title: "🛒 Products Management",
+          description: "Product catalog and management endpoints",
+          endpoints: [
+            {
+              method: "POST",
+              path: "/products/create",
+              description: "Create a new product",
+              auth: "Admin Token Required",
+              body: {
+                title: "Casual T-Shirt",
+                price: 199,
+                cat_prefix: "684a04ee75ff1f474e1a2b86",
+                img: "https://images.pexels.com/photos/1468372/pexels-photo-1468372.jpeg",
+                max: 4,
+                owner: "684c645fd216bfe3cab3eed8"
+              }
+            },
+            {
+              method: "GET",
+              path: "/products",
+              description: "Get all products",
+              auth: "No authentication required"
+            },
+            {
+              method: "GET",
+              path: "/products/:id",
+              description: "Get a specific product by ID",
+              params: { id: "Product ID" },
+              auth: "No authentication required"
+            },
+            {
+              method: "GET",
+              path: "/products/owner/:owner",
+              description: "Get all products by owner/seller",
+              params: { owner: "Owner/User ID" },
+              auth: "No authentication required"
+            },
+            {
+              method: "GET",
+              path: "/products/category/:cat_prefix",
+              description: "Get all products in a specific category",
+              params: { cat_prefix: "Category ID" },
+              auth: "No authentication required"
+            },
+            {
+              method: "GET",
+              path: "/products/search/:title",
+              description: "Search products by title",
+              params: { title: "Product title or keyword" },
+              auth: "No authentication required"
             }
           ]
         }
