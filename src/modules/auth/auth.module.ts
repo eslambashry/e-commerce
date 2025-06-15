@@ -7,7 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '../../core/schemas/user.schema'; // استخدم relative import
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthGuard } from 'src/core/guards/auth.guard';
+import { AuthGuard } from '../../core/guards/auth.guard'; // استخدم relative import
 
 @Module({
     imports: [
