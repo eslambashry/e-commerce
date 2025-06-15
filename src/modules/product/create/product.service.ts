@@ -30,7 +30,7 @@ export class ProductService {
 
         const createdProduct = new this.productModel(productData);
         return createdProduct.save();
-    }
+    } 
 
     // Alternative method if you want to validate the owner exists
     async createProductWithValidation(createProductDto: CreateProductDto): Promise<ProductDocument> {
@@ -40,8 +40,8 @@ export class ProductService {
             price: createProductDto.price,
             owner: new mongoose.Types.ObjectId(createProductDto.owner),
             img: createProductDto.img,
-            cat_prefix: createProductDto.cat_prefix,
-            max: createProductDto.max,
+            cat_prefix: new mongoose.Types.ObjectId(createProductDto.cat_prefix),
+            max: createProductDto.max
         };
 
         const createdProduct = new this.productModel(productData);
@@ -55,4 +55,31 @@ export class ProductService {
             .populate('owner')
             .exec();
     }
+
+
+    async findProductById(productId: string): Promise<ProductDocument> {
+        return this.productModel.findById(productId);
+    }
+
+    async findProductByTitle(title: string): Promise<ProductDocument> {
+        return this.productModel.findOne({ title });
+    }
+
+    async updateProduct(productId: string, updateProductDto: CreateProductDto): Promise<ProductDocument> {
+        return this.productModel.findByIdAndUpdate(productId, updateProductDto, { new: true });
+    }
+
+    async deleteProduct(productId: string): Promise<void> {
+        await this.productModel.findByIdAndDelete(productId);
+    }
+
+    async findProductsByCategory(categoryId: string): Promise<ProductDocument[]> {
+        return this.productModel.find({ cat_prefix: categoryId });
+    }
+
+    async getAllProducts(): Promise<ProductDocument[]> {
+        return this.productModel.find();
+    }
+
+    
 }

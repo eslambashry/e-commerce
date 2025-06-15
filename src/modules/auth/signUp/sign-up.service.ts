@@ -15,7 +15,7 @@ export class SignUpService {
         // Here you would typically handle user registration logic,
             this.logger.log('Starting signUp process...');
         
-        if(!body.firstName || !body.lastName|| !body.email || !body.password || !body.role) {
+        if(!body.firstName || !body.lastName|| !body.email || !body.password ) {
             throw new HttpException('All fields are required', HttpStatus.BAD_REQUEST);
         }
 
