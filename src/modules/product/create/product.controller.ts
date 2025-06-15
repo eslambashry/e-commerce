@@ -19,4 +19,25 @@ export class ProductController {
     async getProduct(@Param('id') id: string) {
         return this.productService.findProductWithOwner(id);
     }
+
+    @Get()
+    async getAllProducts() {
+        return this.productService.getAllProducts();
+    }
+
+    @Get('owner/:owner')
+    async getProductsByOwner(@Param('owner') owner: string) {
+        return this.productService.findProductWithOwner(owner);
+    }
+
+    @Get('category/:cat_prefix')
+    async getProductsByCategory(@Param('cat_prefix') cat_prefix: string) {
+        return this.productService.findProductsByCategory(cat_prefix);
+    }
+
+    @Get('search/:title')
+    async searchProducts(@Param('title') title: string) {
+        return this.productService.findProductByTitle(title);
+    }
+
 }

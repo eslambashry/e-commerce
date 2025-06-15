@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
 import mongoose from "mongoose";
 import { User } from "./user.schema";
+import { Category } from "./category";
 
 export type ProductDocument = Product & Document;
 
@@ -19,8 +20,8 @@ export class Product {
     @Prop({ required: true })  // Remove unique: true - images can be reused
     img: string;
     
-    @Prop({ required: true })  // Remove unique: true - categories can be shared
-    cat_prefix: string;
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true })
+    cat_prefix: mongoose.Types.ObjectId | Category;  // Can be ObjectId or populated User
     
     @Prop({ required: true })  // Remove unique: true - max values can be the same
     max: number;

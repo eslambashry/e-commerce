@@ -6,7 +6,7 @@ export type categorySchema =  HydratedDocument<Category>;
 @Schema({ timestamps: true, versionKey: false })
 export class Category {
   @Prop({ required: true })
-  title: string;
+  title: string; 
 
   @Prop({ required: true })
   prefix: string;
