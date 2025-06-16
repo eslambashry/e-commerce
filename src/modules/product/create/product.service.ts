@@ -49,13 +49,12 @@ export class ProductService {
     }
 
     // Method to get product with populated owner
-    async findProductWithOwner(productId: string): Promise<ProductDocument> {
+    async findProductWithOwner(ownerId: string): Promise<ProductDocument[]> {
         return this.productModel
-            .findById(productId)
+            .find({owner: ownerId})
             .populate('owner')
             .exec();
     }
-
 
     async findProductById(productId: string): Promise<ProductDocument> {
         return this.productModel.findById(productId);
