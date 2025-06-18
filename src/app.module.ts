@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './modules/users/users.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ConfigModule } from '@nestjs/config';
+import { CartModule } from './modules/cart/cart.module';
 
 @Module({
 
@@ -19,8 +20,12 @@ import { ConfigModule } from '@nestjs/config';
     CategoryModule,
     AuthModule,
     UsersModule,
+    CartModule,
     MongooseModule.forRoot(process.env.DB_URL),ConfigModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+
+
+// TODO authGuard use next() to send useId
