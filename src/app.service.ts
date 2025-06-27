@@ -145,7 +145,84 @@ export class AppService {
               auth: "No authentication required"
             }
           ]
-        }
+        },
+          cart: {
+          title: "🛒 Cart Management",
+          description: "Shopping cart operations",
+          endpoints: [
+            {
+              method: "GET",
+              path: "/cart",
+              description: "Get all carts",
+              auth: "Admin Token Required",
+            },
+            {
+               method: "GET",
+              path: "/cart/:ownerId",
+              description: "Get cart by owner ID",
+              params: { ownerId: "Owner ID" },
+              auth: "No authentication required"
+            },
+            {
+              method: "POST",
+              path: "/cart/add",
+              description: "Add a product to the cart",
+              auth: "No authentication required",
+              body: {
+                productId: "Product ID",
+                quantity: 1
+              }
+            },
+            {
+              method: "DELETE",
+              path: "/cart/delete/:id",
+              description: "Delete a cart by ID",
+              params: { id: "Cart ID" },
+              auth: "No authentication required"
+            },
+            {
+              method: "PUT",
+              path: "/cart/update",
+              description: "Update a cart",
+              auth: "No authentication required",
+            },
+            {
+              method: "GET",
+              path: "/cart/getByOwner/:ownerId",
+              description: "Get cart by owner ID",
+              params: { ownerId: "Owner ID" },
+              auth: "No authentication required"
+            },
+            {
+              method: "GET",
+              path: "/cart/getByProduct/:productId",
+              description: "Get cart by product ID",
+              params: { productId: "Product ID" },
+              auth: "No authentication required"
+            },
+            {
+              method: "GET",
+              path: "/cart/getByOwnerAndProduct/:ownerId/:productId",
+              description: "Get cart by owner ID and product ID",
+              params: { ownerId: "Owner ID", productId: "Product ID" },
+              auth: "No authentication required"
+            },
+            {
+              method: "GET",
+              path: "/cart/getByOwnerAndProduct/:ownerId/:productId",
+              description: "Get cart by owner ID and product ID",
+              params: { ownerId: "Owner ID", productId: "Product ID" },
+              auth: "No authentication required"
+            },
+            {
+              method: "GET",
+              path: "/cart/getByOwnerAndProduct/:ownerId/:productId",
+              description: "Get cart by owner ID and product ID",
+              params: { ownerId: "Owner ID", productId: "Product ID" },
+              auth: "No authentication required"
+      },
+          ]
+        },
       },
       status: {
         server: "🟢 Online",

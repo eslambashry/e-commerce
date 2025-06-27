@@ -1,6 +1,7 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { Cart } from 'src/core/schemas/cart';
+import { AddToCartDto } from './dto/cart.dto';
 
 @Controller('cart')
 export class CartController {
@@ -11,27 +12,33 @@ export class CartController {
 
 
     // Example method to demonstrate controller functionality
+    @Get()
     getCarts() {
         return this._cartService.getCarts();
     }
 
+    @Get('/:id')
     getCartById(id: string) {
         return this._cartService.getCartById(id);
     }
 
-    addToCart(cartData: Partial<Cart>) {
-        return this._cartService.addToCart(cartData);
+    @Post('add')
+    addToCart(@Body() body: AddToCartDto) {
+        return this._cartService.addToCart(body);
     }
 
-    getCartByOwner(ownerId: string) {
+    @Get('getByOwner/:ownerId')
+    getCartByOwner(@Param('ownerId') ownerId: string) {     
         return this._cartService.getCartByOwner(ownerId);
     }
 
-    deleteCart(id: string) {
+    @Delete('delete/:id')
+    deleteCart(@Param('id') id: string) {
         return this._cartService.deleteCart(id);
     }
 
-    updateCart(id: string, cartData: Partial<Cart>) {
-        return this._cartService.updateCart(id, cartData);
+    @Put('update')
+    updateCart(id: string, body: AddToCartDto) {
+        return this._cartService.updateCart(id, body);
     }
 }

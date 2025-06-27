@@ -19,12 +19,12 @@ class ProductItem {
 @Schema({ timestamps: true, versionKey: false })
 export class Cart {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
-  userId: mongoose.Types.ObjectId | User;
+  owner: mongoose.Types.ObjectId | User;
 
   @Prop({ type: [ProductItem], required: true })
   products: ProductItem[];
 
-  @Prop({ required: true })
+  @Prop({ required: true }) 
   totalPrice: number;
 }
 
