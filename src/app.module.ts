@@ -6,9 +6,12 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './modules/users/users.module';
 import { CategoryModule } from './modules/category/category.module';
-import { ConfigModule } from '@nestjs/config';
 import { CartModule } from './modules/cart/cart.module';
-
+import { ConfigModule ,ConfigService} from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm'; // <-- 1. استيراد TypeOrmModule
+import { ProjectsModule } from './modules/projects/projects.module';
+import { Project } from './modules/projects/project.entity';
+ 
 @Module({
 
   imports: [
@@ -16,11 +19,27 @@ import { CartModule } from './modules/cart/cart.module';
       envFilePath: './config/.env',
       isGlobal: true,
     }),
+     TypeOrmModule.forRootAsync({
+      imports: [ConfigModule], // استيراد ConfigModule هنا لضمان توفر ConfigService
+      inject: [ConfigService], // حقن ConfigService لاستخدامه
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
+        // entities: [Project], // <-- سنضيف الـ Entities هنا لاحقاً
+        autoLoadEntities: true,
+        synchronize: true, // <-- هام: true للتطوير فقط، يجعل TypeORM ينشئ الجداول تلقائياً
+      }),
+    }),
     ProductModule,
     CategoryModule,
     AuthModule,
     UsersModule,
     CartModule,
+    ProjectsModule,  
     MongooseModule.forRoot(process.env.DB_URL),ConfigModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
