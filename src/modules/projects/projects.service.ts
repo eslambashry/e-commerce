@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Project } from './project.entity';
+import { Project } from './entities/project.entity';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
  
@@ -13,11 +13,7 @@ export class ProjectsService {
   ) {}
 
    async create(createProjectDto: CreateProjectDto): Promise<Project> {
-    console.log(createProjectDto);
-    
     const newProject = this.projectsRepository.create(createProjectDto);
-    console.log(newProject);
-    
     return this.projectsRepository.save(newProject);
   }
 
