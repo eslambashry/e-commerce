@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 import { winstonConfig } from '../config/logger.config';
 
 import winston from 'winston';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   // Load environment variables first
@@ -23,7 +24,25 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['log', 'error', 'warn', 'debug', 'verbose'],
   });
+  app.useGlobalPipes(
+    new ValidationPipe({
+      // --- خيارات موصى بها بشدة للأمان والتنظيم ---
 
+      // (أ) يزيل أي خصائص في الطلب لا يوجد لها مقابل في الـ DTO
+      // هذا يحمي من إدخال بيانات غير متوقعة.
+      whitelist: true,
+
+      // (ب) يرمي خطأ إذا وجد خصائص غير مسموح بها (يعمل مع whitelist)
+      forbidNonWhitelisted: true,
+
+      // (ج) يقوم بتحويل أنواع البيانات تلقائياً (مثلاً، من نص إلى رقم)
+      // هذا يغنيك عن استخدام @Type() في كثير من الحالات.
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  )
   app.use(
     morgan('dev', {
       stream: {

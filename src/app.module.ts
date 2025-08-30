@@ -1,16 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './modules/product/product.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './modules/users/users.module';
-import { CategoryModule } from './modules/category/category.module';
-import { CartModule } from './modules/cart/cart.module';
 import { ConfigModule ,ConfigService} from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm'; // <-- 1. استيراد TypeOrmModule
 import { ProjectsModule } from './modules/projects/projects.module';
-import { Project } from './modules/projects/project.entity';
+import { ClientModule } from './modules/client/client.module';
+import { VendorsModule } from './modules/vendors/vendors.module';
+import { ResearchesModule } from './modules/researches/researches.module';
  
 @Module({
 
@@ -34,12 +33,12 @@ import { Project } from './modules/projects/project.entity';
         synchronize: true, // <-- هام: true للتطوير فقط، يجعل TypeORM ينشئ الجداول تلقائياً
       }),
     }),
-    ProductModule,
-    CategoryModule,
     AuthModule,
     UsersModule,
-    CartModule,
+    VendorsModule,
     ProjectsModule,  
+    ResearchesModule,
+    ClientModule,
     MongooseModule.forRoot(process.env.DB_URL),ConfigModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],

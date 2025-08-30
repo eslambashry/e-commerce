@@ -14,11 +14,22 @@ import {
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { MatchingService } from './matching.service';
 
 
 @Controller('projects')
 export class ProjectsController {
-    constructor(private readonly projectsService: ProjectsService) { }
+    constructor(
+        private readonly projectsService: ProjectsService,
+        private readonly matchingService: MatchingService,
+    ) { }
+
+
+  @Post(':id/matches/rebuild')
+  @HttpCode(HttpStatus.CREATED)
+  rebuildMatches(@Param('id', ParseUUIDPipe) id: string) {
+    return this.matchingService.rebuildMatches(id);
+  }
 
     @Post()
     create(@Body() createProjectDto: CreateProjectDto) {
